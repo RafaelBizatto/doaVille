@@ -5,17 +5,25 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "item_doacao")
+@Table(name = "usuario")
 @Data
 @EqualsAndHashCode(of = "id")
-public class ItemDoacao {
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
     private String nome;
 
-    private String descricao;
-    private boolean ativo = true;
+    @Column(name = "nome_usuario", unique = true)
+    private String nomeUsuario;
+
+    private String senha;
+
+    @Enumerated(EnumType.STRING)
+    private Perfil perfil;
+
+    public enum Perfil {
+        ADMIN, USER
+    }
 }

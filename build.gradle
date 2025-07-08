@@ -24,38 +24,39 @@ repositories {
 }
 
 dependencies {
-	// --- DEPENDÊNCIAS ESSENCIAIS ---
-	// Para criar APIs REST e aplicações Web
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	
-	// Para persistência de dados com JPA/Hibernate
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	
-	// Para validação de dados (ex: @Valid, @NotEmpty nos DTOs)
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // --- DEPENDÊNCIAS ESSENCIAIS ---
+    // Para criar APIs REST e aplicações Web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    
+    // Para persistência de dados com JPA/Hibernate
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    
+    // Para validação de dados (ex: @Valid, @NotEmpty nos DTOs)
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	// Para reduzir código repetitivo (getters, setters, construtores)
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	
-	// Driver do banco de dados PostgreSQL
-	runtimeOnly 'org.postgresql:postgresql'
-	
-	// --- DEPENDÊNCIAS PARA PONTOS EXTRAS (SEGURANÇA E JWT) ---
-	// Spring Security para controle de acesso, autenticação e autorização
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+    // Para reduzir código repetitivo (getters, setters, construtores)
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    
+    // Driver do banco de dados PostgreSQL
+    runtimeOnly 'org.postgresql:postgresql'
+    
+    
+    // --- DEPENDÊNCIAS PARA PONTOS EXTRAS (SEGURANÇA E JWT) ---
+    // Spring Security para controle de acesso, autenticação e autorização
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	// Bibliotecas para criar e validar JSON Web Tokens (JWT)
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    // Biblioteca para criar e validar JSON Web Tokens (JWT)
+    // Usaremos a da Auth0, que é moderna e robusta.
+    implementation 'com.auth0:java-jwt:4.4.0'
 
-	// --- DEPENDÊNCIAS DE TESTE ---
-	// Para testes unitários e de integração
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	
-	// Para testes com Spring Security
-	testImplementation 'org.springframework.security:spring-security-test'
+    
+    // --- DEPENDÊNCIAS DE TESTE ---
+    // Para testes unitários e de integração
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    
+    // Para testes com Spring Security
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {

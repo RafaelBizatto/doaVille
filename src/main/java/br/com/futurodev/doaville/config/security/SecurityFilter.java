@@ -25,17 +25,26 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        // Se o pedido for para o login, o filtro sai do caminho imediatamente.
+        if (request.getRequestURI().equals("/api/login")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         var tokenJWT = recuperarToken(request);
 
         if (tokenJWT != null) {
-            var subject = tokenService.getSubject(tokenJWT); // Valida e pega o nome de usuário
-            var usuario = usuarioRepository.findByNomeUsuario(subject).get();
-            var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + usuario.getPerfil().name()));
-            var authentication = new UsernamePasswordAuthenticationToken(usuario, null, authorities);
-            SecurityContextHolder.getContext().setAuthentication(authentication); // Informa ao Spring que o usuário está autenticado
+            var subject = tokenService.getSubject(tokenJWT);
+            var usuario = usuarioRepository.findByNomeUsuario(subject).orElse(null);
+
+            if (usuario != null) {
+                var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + usuario.getPerfil().name()));
+                var authentication = new UsernamePasswordAuthenticationToken(usuario, null, authorities);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
 
-        filterChain.doFilter(request, response); // Continua para o próximo filtro
+        filterChain.doFilter(request, response);
     }
 
     private String recuperarToken(HttpServletRequest request) {

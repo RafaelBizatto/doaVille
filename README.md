@@ -1,4 +1,3 @@
-
 # 🌱 DoaVille - Plataforma de Doações Sustentáveis
 
 > 🔄 Transformando doações em solidariedade e sustentabilidade.
@@ -23,16 +22,16 @@
 
 ## 🛠️ Tecnologias Utilizadas
 
-| Tecnologia               | Finalidade                                   |
-|--------------------------|----------------------------------------------|
-| ☕ Java 21               | Linguagem principal                          |
-| 🌱 Spring Boot 3        | Framework para desenvolvimento ágil          |
-| 🔐 Spring Security + JWT| Autenticação e controle de acesso            |
-| 🐘 PostgreSQL           | Banco de dados relacional                    |
-| 📦 Gradle               | Gerenciador de dependências e build          |
-| 🧰 Lombok               | Redução de boilerplate (getters/setters)     |
-| ✅ Bean Validation       | Validações com anotações (@NotBlank, etc)   |
-| 🔍 JUnit + Spring Test   | Testes automatizados                         |
+| Tecnologia               | Finalidade                                |
+| ------------------------ | ----------------------------------------- |
+| ☕ Java 21                | Linguagem principal                       |
+| 🌱 Spring Boot 3         | Framework para desenvolvimento ágil       |
+| 🔐 Spring Security + JWT | Autenticação e controle de acesso         |
+| 🐘 PostgreSQL            | Banco de dados relacional                 |
+| 📦 Gradle                | Gerenciador de dependências e build       |
+| 🧠 Lombok                | Redução de boilerplate (getters/setters)  |
+| ✅ Bean Validation        | Validações com anotações (@NotBlank, etc) |
+| 🔍 JUnit + Spring Test   | Testes automatizados                      |
 
 ---
 
@@ -40,10 +39,10 @@
 
 ```
 📦 doaville
- ┣ 📂 src
- ┣ 📄 build.gradle
- ┣ 📄 settings.gradle
- ┣ 📄 gradlew / gradlew.bat
+ ├ 📂 src
+ ├ 📄 build.gradle
+ ├ 📄 settings.gradle
+ ├ 📄 gradlew / gradlew.bat
  ┗ 📄 README.md
 ```
 
@@ -55,10 +54,11 @@
 
 ### 📋 Pré-requisitos
 
-- Java 21+
-- PostgreSQL
-- Git
-- IDE (IntelliJ, Eclipse ou VSCode)
+* Java 21+
+* PostgreSQL
+* Git
+* IDE (IntelliJ, Eclipse ou VSCode)
+* Postman (para teste) "caso queira testar as requisições"
 
 ### 📦 Clonar o projeto
 
@@ -92,37 +92,62 @@ Acesse a API em: `http://localhost:8080`
 
 ## 🔐 Endpoints Principais
 
-| Método | Rota                  | Descrição                        | Proteção |
-|--------|-----------------------|----------------------------------|----------|
-| POST   | `/api/auth/login`     | Autenticar e gerar token JWT     | ❌       |
-| POST   | `/api/usuarios`       | Cadastro de novo usuário         | ❌       |
-| GET    | `/api/doacoes`        | Listar doações disponíveis       | ✅       |
-| POST   | `/api/doacoes`        | Criar uma nova doação            | ✅       |
-| POST   | `/api/solicitacoes`   | Solicitar item doado             | ✅       |
-| GET    | `/api/solicitacoes`   | Ver solicitações feitas          | ✅       |
+| Método | Rota                     | Descrição                    | Proteção | Perfil      |
+| ------ | ------------------------ | ---------------------------- | -------- | ----------- |
+| POST   | `/api/login`             | Autenticar e gerar token JWT | ❌        | Público     |
+| POST   | `/api/usuarios`          | Cadastrar novo usuário       | ✅        | ADMIN       |
+| GET    | `/api/usuarios`          | Listar todos os usuários     | ✅        | ADMIN       |
+| GET    | `/api/itens-doacao`      | Listar itens de doação       | ✅        | ADMIN       |
+| POST   | `/api/itens-doacao`      | Criar um novo item de doação | ✅        | ADMIN       |
+| POST   | `/api/solicitacoes`      | Solicitar um item doado      | ✅        | ADMIN, USER |
+| GET    | `/api/solicitacoes`      | Ver solicitações feitas      | ✅        | ADMIN, USER |
+| DELETE | `/api/solicitacoes/{id}` | Deletar uma solicitação      | ✅        | ADMIN       |
 
-🔒 Rotas protegidas exigem **token JWT** no header:  
+🔒 Rotas protegidas exigem **token JWT** no header:
 `Authorization: Bearer SEU_TOKEN`
+
+---
+
+## 🤭 Testes com Postman
+
+Você pode testar todos os endpoints da API utilizando o [Postman](https://www.postman.com/).
+
+### 🔐 Autenticação com JWT no Postman
+
+1. **Realize o login** na rota `/api/login` com o método `POST` e envie as credenciais no corpo da requisição:
+
+   ```json
+   {
+     "email": "admin@email.com",
+     "senha": "123"
+   }
+   ```
+2. Copie o token retornado e adicione no cabeçalho (`Headers`) das próximas requisições:
+
+   ```
+   Authorization: Bearer SEU_TOKEN_AQUI
+   ```
+3. Teste as rotas protegidas como `/api/usuarios`, `/api/itens-doacao`, etc.
 
 ---
 
 ## 🧠 Possíveis Melhorias Futuras
 
-- [ ] 📸 Upload de imagem dos itens doados  
-- [ ] 📨 Envio de e-mails automáticos  
-- [ ] 📍 Geolocalização de doadores próximos  
-- [ ] 🔄 Sistema de avaliação entre usuários  
-- [ ] 📊 Dashboard administrativo
+* [ ] 📸 Upload de imagem dos itens doados
+* [ ] 📨 Envio de e-mails automáticos
+* [ ] 📍 Geolocalização de doadores próximos
+* [ ] 🔄 Sistema de avaliação entre usuários
+* [ ] 📊 Dashboard administrativo
 
 ---
 
 ## 🤝 Contribuindo
 
-1. Faça um fork do repositório  
-2. Crie sua branch: `git checkout -b feature/nova-funcionalidade`  
-3. Commit suas mudanças: `git commit -m "feat: nova funcionalidade"`  
-4. Push: `git push origin feature/nova-funcionalidade`  
-5. Abra um Pull Request 🙌
+1. Faça um fork do repositório
+2. Crie sua branch: `git checkout -b feature/nova-funcionalidade`
+3. Commit suas mudanças: `git commit -m "feat: nova funcionalidade"`
+4. Push: `git push origin feature/nova-funcionalidade`
+5. Abra uma PR (Pull Request) 🙌
 
 ---
 
@@ -134,5 +159,5 @@ Este projeto está sob a [licença MIT](LICENSE).
 
 ## ✍️ Autor
 
-Desenvolvido com 💚 por **Rafael Sonni Bizatto**  
+Desenvolvido com 💚 por **Rafael Sonni Bizatto**
 GitHub: [@RafaelBizatto](https://github.com/RafaelBizatto)
